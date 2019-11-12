@@ -1,6 +1,10 @@
-import { createStackNavigator } from 'react-navigation';
-import Registros from './components/Registros'
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import Registros from './pages/Registros';
+import Cadastro from './pages/Cadastro';
 
-export default createStackNavigator ({
-    Registros
-});
+export default createAppContainer(
+  createSwitchNavigator({
+    Cadastro,
+    Registros,
+  }),
+);
