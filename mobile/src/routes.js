@@ -4,7 +4,7 @@ import Cadastro from './pages/Cadastro';
 
 export default createAppContainer(
   createSwitchNavigator({
-    Cadastro,
     Registros,
+    Cadastro,
   }),
 );

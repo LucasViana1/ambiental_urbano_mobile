@@ -1,64 +1,85 @@
-import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import api from '../services/api';
 
-export default class Registros extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      qtd: 0,
-    };
+const Registros = ({navigation}) => {
+  const [data, setData] = useState([]);
+  const [qtd, setqtd] = useState(0);
 
-    this.handleRegister = this.handleRegister.bind(this);
-  }
+  useEffect(() => {
+    loadRegister();
+  }, []);
 
-  handleRegister() {
-    this.props.navigation.navigate('Cadastro');
-  }
-
-  componentDidMount() {
-    this.loadRecords();
-  }
-
-  loadRecords = async () => {
+  const loadRegister = async () => {
     const response = await api.get('/registros');
-
     const data2 = response.data;
-    this.setState({data: data2});
-    this.setState({qtd: this.state.data.length});
-    // console.log(this.state.data);
-    // console.log(this.props);
+    // console.log(data2.length  );
+    // setData(data2);
+    for (i = 0; i < data2.length; i++) {
+      setData(data.push(data2[i]));
+      // console.log('ah');
+    }
+    // console.log(response.data[0]);
+    console.log(data);
   };
 
-  render() {
-    let registros = [];
-    for (i = 0; i < this.state.qtd; i++) {
-      registros.push(
-        <View key={i}>
-          <Text>{this.state.data[i].id}</Text>
-          <Text>{this.state.data[i].data_ocorrido}</Text>
-        </View>,
-      );
-    }
-
-    return (
+  return (
+    <View style={styles.container}>
       <View>
-        <View>{registros}</View>
-        <View>
-          <TouchableOpacity
-            onPress={this.handleRegister}
-            style={styles.button_register}>
-            <Text>Cadastrar</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Cadastro')}
+          style={styles.btnRegister}>
+          <Text>Cadastrar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setqtd(qtd + 1)}
+          style={styles.btnRegister}>
+          <Text>testee</Text>
+        </TouchableOpacity>
       </View>
-    );
-  }
-}
+      <View>
+        <Text>{data}</Text>
+        <FlatList
+          data={data}
+          renderItem={({item}) => (
+            <View>
+              <Text>{item.id}</Text>
+            </View>
+          )}
+          keyExtractor={item => item.id}
+        />
+      </View>
+    </View>
+  );
+};
+
+export default Registros;
 
 const styles = StyleSheet.create({
-  button_register: {
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    padding: 6,
+    backgroundColor: '#e6e6e6',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+  },
+  header: {
+    // flex: 1,
+    backgroundColor: '#9fff96',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 1,
+
+    borderRadius: 40,
+  },
+  body: {
+    flex: 6,
+    backgroundColor: '#e6e6e6',
+    marginTop: 20,
+  },
+  btnRegister: {
     backgroundColor: 'red',
   },
 });
