@@ -16,7 +16,7 @@ import logo from '../assets/logo.png';
 // import iconFooter from '../assets/footer_icon.png';
 
 // export default class Cadastro extends Component {
-const Cadastro = () => {
+const Cadastro = ({navigation}) => {
   const [data, setData] = useState('');
   const [ocorrencia, setOcorrencia] = useState('Poluição do ar');
   const [gravidade, setGravidade] = useState('Baixa');
@@ -161,7 +161,17 @@ const Cadastro = () => {
           />
         </View>
 
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'row',
+          }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Registros')}
+            style={styles.btnSave}>
+            <Text style={styles.btnSaveLabel}>VOLTAR</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={save} style={styles.btnSave}>
             <Text style={styles.btnSaveLabel}>SALVAR</Text>
           </TouchableOpacity>
@@ -211,8 +221,6 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     margin: 5,
-    // position: 'relative',
-    // justifyContent: 'flex-start',
   },
 
   titulo: {
