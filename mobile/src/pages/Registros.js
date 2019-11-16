@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
   Image,
+  Alert
 } from 'react-native';
 
 import api from '../services/api';
@@ -28,6 +29,34 @@ const Registros = ({navigation}) => {
     setData(data2);
 
     console.log(data);
+  };
+  const deleteRegister = async (idRecord, x) => {
+    console.log(x);
+    // Alert.alert(
+    //   'Tem certeza que deseja excluir esse registro?',
+    //   'Essa exclusão é permanente!',
+    //   [
+    //     // {
+    //     //   text: 'Ask me later',
+    //     //   onPress: () => console.log('Ask me later pressed'),
+    //     // },
+    //     {
+    //       text: 'CANCELAR',
+    //       onPress: () => console.log('Cancel Pressed'),
+    //       style: 'cancel',
+    //     },
+    //     {
+    //       text: 'OK',
+    //       onPress: () => {
+    //         //exclui registro via Rest
+    //         console.log(`excluido registro do id ${idRegister}`);
+    //       }
+    //     },
+    //   ],
+    //   {cancelable: false},
+    // );
+    // // const response = await api.get('/registros');
+
   };
 
   const getAvatar = tipo => {
@@ -88,19 +117,19 @@ const Registros = ({navigation}) => {
 
               <View style={{flex: 1, marginRight: 17, alignItems: 'flex-end'}}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('Cadastro')}
+                  onPress={deleteRegister}
                   style={styles.btnDelete}>
                   <Text style={styles.btnLabel}>X</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => navigation.navigate('Cadastro')}
                   style={styles.btnEdit}>
                   <Text style={styles.btnLabel}>/</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id.toString()}
         />
       </View>
     </View>
@@ -150,9 +179,12 @@ const styles = StyleSheet.create({
   btnDelete: {
     backgroundColor: 'red',
     alignItems: 'center',
-    width: 18,
+    width: 40,
+    height: 40,
     marginBottom: 3,
-    borderRadius: 4,
+    borderRadius: 100,
+    justifyContent: 'center',
+    borderWidth: 2,
   },
   btnEdit: {
     backgroundColor: '#d1ce00',
@@ -161,8 +193,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   btnLabel: {
-    fontSize: 17,
+    fontSize: 25,
     fontWeight: 'bold',
+
   },
   listItem: {
     borderBottomWidth: 1,
