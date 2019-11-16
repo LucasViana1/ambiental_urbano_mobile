@@ -32,30 +32,30 @@ const Registros = ({navigation}) => {
   };
   const deleteRegister = async (idRecord, x) => {
     console.log(x);
-    // Alert.alert(
-    //   'Tem certeza que deseja excluir esse registro?',
-    //   'Essa exclusão é permanente!',
-    //   [
-    //     // {
-    //     //   text: 'Ask me later',
-    //     //   onPress: () => console.log('Ask me later pressed'),
-    //     // },
-    //     {
-    //       text: 'CANCELAR',
-    //       onPress: () => console.log('Cancel Pressed'),
-    //       style: 'cancel',
-    //     },
-    //     {
-    //       text: 'OK',
-    //       onPress: () => {
-    //         //exclui registro via Rest
-    //         console.log(`excluido registro do id ${idRegister}`);
-    //       }
-    //     },
-    //   ],
-    //   {cancelable: false},
-    // );
-    // // const response = await api.get('/registros');
+    Alert.alert(
+      'Tem certeza que deseja excluir esse registro?',
+      'Essa exclusão é permanente!',
+      [
+        // {
+        //   text: 'Ask me later',
+        //   onPress: () => console.log('Ask me later pressed'),
+        // },
+        {
+          text: 'CANCELAR',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            //exclui registro via Rest
+            console.log(`excluido registro do id ${idRegister}`);
+          }
+        },
+      ],
+      {cancelable: false},
+    );
+    // const response = await api.get('/registros');
 
   };
 
@@ -117,7 +117,34 @@ const Registros = ({navigation}) => {
 
               <View style={{flex: 1, marginRight: 17, alignItems: 'flex-end'}}>
                 <TouchableOpacity
-                  onPress={deleteRegister}
+                  onPress={() => {
+
+                    //logica e requisição para deletar registro
+                    Alert.alert(
+                      'Tem certeza que deseja excluir esse registro?',
+                      'Essa exclusão é permanente!',
+                      [
+                        // {
+                        //   text: 'Ask me later',
+                        //   onPress: () => console.log('Ask me later pressed'),
+                        // },
+                        {
+                          text: 'CANCELAR',
+                          onPress: () => console.log('Cancel Pressed'),
+                          style: 'cancel',
+                        },
+                        {
+                          text: 'OK',
+                          onPress: () => {
+                            //exclui registro via Rest
+                            const response = api.delete(`/registros/${item.id}`);
+                            console.log(`excluido registro do id ${item.id}`);
+                          }
+                        },
+                      ],
+                      {cancelable: false},
+                    );
+                  }}
                   style={styles.btnDelete}>
                   <Text style={styles.btnLabel}>X</Text>
                 </TouchableOpacity>
